@@ -1,0 +1,150 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360 Viewer</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        #viewer {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #thumbnail-container {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 20%;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            overflow-x: auto;
+            padding: 10px;
+            align-items: center;
+        }
+
+        .thumbnail {
+            flex-shrink: 0;
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .thumbnail:hover {
+            border: 2px solid white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="panorama"></div>
+    <script> 
+        function changePanorama(newImage) {
+            pannellum.viewer('panorama', {
+                "type": "equirectangular",
+                "autoLoad":true,
+                "panorama": newImage
+            });
+        }
+    </script>
+    <div id="thumbnail-container"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const viewer = document.getElementById("viewer");
+            const thumbnailContainer = document.getElementById("thumbnail-container");
+
+            // Get destination ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const destinationId = urlParams.get("destination");
+
+            let selectedIndex = 0;
+            let selectedItem = {
+                id: "",
+                name: "",
+                description: "",
+                categories: [],
+                tags: [],
+                address: "",
+                thumbnail: "",
+                virtual_tour: []
+            };
+
+            async function fetchDestinations() {
+                try {
+                    // const response = await fetch("https://cms.openisland.ph/api/get-destination"); // Adjust API endpoint
+                    const response = await fetch("http://localhost:8000/api/destinations"); // Adjust API endpoint
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    return [];
+                }
+            }
+
+            async function init() {
+                const destinations = await fetchDestinations();
+                const foundItem = destinations.find(d => d.id == destinationId);
+                const tours = JSON.parse(foundItem.virtual_tour); 
+
+                console.log(Array.isArray(tours) ? tours : 'error');
+                if (tours) {
+                    selectedItem = tours;
+                    updateViewer();
+                    renderThumbnails();
+                }
+            }
+
+            function updateViewer() {
+                if (selectedItem[selectedIndex]) {
+                    changePanorama(selectedItem[selectedIndex].path);
+                }
+            }
+
+
+            function renderThumbnails() {
+                thumbnailContainer.innerHTML = "";
+                selectedItem.forEach((item, index) => {
+                    const card = document.createElement("div");
+                    card.classList.add("card");
+                    card.style.backgroundImage = `url('${item.path}')`;
+
+                    const title = document.createElement("div");
+                    title.classList.add("card-title");
+                    title.textContent = item.title;
+
+                    card.appendChild(title);
+                    card.onclick = () => {
+                        selectedIndex = index;
+                        updateViewer();
+                    };
+
+                    thumbnailContainer.appendChild(card);
+                });
+            }
+
+            // Allow horizontal scrolling with vertical scroll
+            thumbnailContainer.addEventListener("wheel", (event) => {
+                event.preventDefault();
+                thumbnailContainer.scrollLeft += event.deltaY;
+            });
+
+            init();
+        });
+    </script>
+</body>
+
+</html>
