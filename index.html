@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>360 Viewer</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <link rel="stylesheet" href="pannellum.css" />
+    <script type="text/javascript" src="pannellum.js"></script>
     <style>
         body {
             margin: 0;
@@ -32,6 +32,17 @@
             overflow-x: auto;
             padding: 10px;
             align-items: center;
+            justify-content: center;
+            /* Center horizontally */
+        }
+
+        .card {
+            min-width: 100px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            height: 90%;
+            /* Center text inside card */
         }
 
         .thumbnail {
@@ -51,14 +62,10 @@
 
 <body>
     <div id="panorama"></div>
-    <script> 
-        function changePanorama(newImage) {
-            pannellum.viewer('panorama', {
-                "type": "equirectangular",
-                "autoLoad":true,
-                "panorama": newImage
-            });
-        }
+    <script>
+        let viewer;
+
+
     </script>
     <div id="thumbnail-container"></div>
 
@@ -66,7 +73,7 @@
         document.addEventListener("DOMContentLoaded", async function () {
             const viewer = document.getElementById("viewer");
             const thumbnailContainer = document.getElementById("thumbnail-container");
-
+            let viewerOBJ;
             // Get destination ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             const destinationId = urlParams.get("destination");
@@ -98,25 +105,50 @@
             async function init() {
                 const destinations = await fetchDestinations();
                 const foundItem = destinations.find(d => d.id == destinationId);
-                const tours = JSON.parse(foundItem.virtual_tour); 
+                // console.log(foundItem);
+                const tours = JSON.parse(foundItem.virtual_tour);
 
-                console.log(Array.isArray(tours) ? tours : 'error');
-                if (tours) {
-                    selectedItem = tours;
-                    updateViewer();
-                    renderThumbnails();
-                }
+                const scenes = {};
+
+                // Loop through all tours and create scenes dynamically
+                tours.forEach((tour, index) => {
+                    const sceneKey = `${tour.title}${index}`; // Unique key for each scene
+
+                    scenes[sceneKey] = {
+                        "title": tour.title,
+                        "hfov": 110,
+                        "pitch": -3,
+                        "yaw": 117,
+                        "type": "equirectangular",
+                        "panorama": encodeURI(tour.path), // Encode URL to prevent space issues
+                    };
+                });
+
+                console.log(scenes);
+                // Create the viewer configuration
+                const viewerConfig = {
+                    "default": {
+                        "firstScene": Object.keys(scenes)[0], // Set first scene dynamically
+                        "author": "Mata Technologies Inc.",
+                        "sceneFadeDuration": 1000,
+                        "autoLoad": false
+                    },
+                    "scenes": scenes
+                };
+                selectedItem = tours;
+                // Initialize Pannellum viewer with generated configuration
+                viewerOBJ = pannellum.viewer('panorama', viewerConfig);
+
+
+                renderThumbnails();
+
             }
 
-            function updateViewer() {
-                if (selectedItem[selectedIndex]) {
-                    changePanorama(selectedItem[selectedIndex].path);
-                }
-            }
 
 
             function renderThumbnails() {
                 thumbnailContainer.innerHTML = "";
+                console.log(selectedItem);
                 selectedItem.forEach((item, index) => {
                     const card = document.createElement("div");
                     card.classList.add("card");
@@ -128,8 +160,9 @@
 
                     card.appendChild(title);
                     card.onclick = () => {
-                        selectedIndex = index;
-                        updateViewer();
+                        selectedIndex = `${item.title}${index}`;
+                        console.log('selectedIndex', selectedIndex);
+                        viewerOBJ.loadScene(selectedIndex);
                     };
 
                     thumbnailContainer.appendChild(card);
@@ -143,6 +176,7 @@
             });
 
             init();
+
         });
     </script>
 </body>
