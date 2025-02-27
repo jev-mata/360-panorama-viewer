@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>360 - Open Island</title>
+    <title id="title">360 - Open Island</title>
     
-    <link rel="icon" type="image/png" href='openisland icon.png'/>
+    <link rel="icon" type="image/png" href='https://cms.openisland.ph/_next/static/media/openisland icon.c5fd2358.png'/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="panorama.css" />
-    <script type="text/javascript" src="panorama.js"></script>
+        rel="stylesheet"> 
+    <script type="text/javascript" src="tour.js"></script>
+    <script type="text/javascript" src="viewer.js"></script>
     <style>
         body {
             margin: 0;
@@ -26,28 +26,7 @@
             width: 100%;
             height: 100%;
         }
-
-        #thumbnail-container {
-            position: fixed;
-            background: rgba(0, 0, 0, 0.3);
-            width: fit-content;
-            /* Makes the width fit its content */
-            height: 10%;
-            bottom: 1%;
-            left: 50%;
-            transform: translateX(-50%);
-            /* Centers it horizontally */
-            display: flex;
-            overflow-x: auto;
-            padding: 10px;
-            align-items: center;
-            justify-content: center;
-            overflow-y: hidden;
-            border-radius: 10px;
-            white-space: nowrap;
-            /* Prevents line breaks */
-        }
-
+ 
 
         .pnlm-panorama-info {
             top: 0;
@@ -159,15 +138,10 @@
     <div id="title-pano-contailer">
         <span id="title-destination"></span>
         <span id="title-panorama"></span>
-    </div>
-    <script>
-        let viewer;
-
-
-    </script>
+    </div> 
     <div id="thumbnail-container"></div>
 
-    <script>
+    <!-- <script>
         document.addEventListener("DOMContentLoaded", async function () {
             const viewer = document.getElementById("viewer");
             const panoramaText = document.getElementById("title-panorama");
@@ -339,7 +313,7 @@
         }
 
 
-    </script>
+    </script> -->
 </body>
 
 </html>
