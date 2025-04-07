@@ -1,0 +1,139 @@
+/* Pannellum 2.5.6, https://github.com/mpetroff/pannellum */
+ 
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: white;
+}
+
+#viewer {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#thumbnail-container2 {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.3);
+    width: fit-content;
+    /* Makes the width fit its content */
+    height: 10%;
+    bottom: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Centers it horizontally */
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    overflow-y: hidden;
+    border-radius: 10px;
+    white-space: nowrap;
+    /* Prevents line breaks */
+}
+
+
+.pnlm-panorama-info {
+    top: 0;
+    right: 0;
+    display: none;
+    opacity: 0;
+    position: absolute;
+    height: auto;
+    max-height: 7%;
+}
+
+#title-pano-contailer {
+    width: fit-content;
+    top: 5px;
+    right: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    opacity: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    height: auto;
+    max-height: 7%;
+    border-radius: 5px;
+    color: white;
+    /* background-color: rgba(0,0,0,0.4) ; */
+    z-index: 99;
+}
+
+.card {
+    min-width: 100px;
+    transition: all 0.5s;
+    margin: 10px;
+    text-align: center;
+    display: flex;
+    height: 90%;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    /* Required for absolute positioning of title */
+}
+
+
+.pnlm-about-msg {
+    height: auto;
+    padding: 15px;
+    background-color: white;
+}
+
+#contextMenu {
+    text-decoration: none;
+    background-color: white;
+    font-size: large;
+    color: black;
+}
+
+#title-panorama {
+    text-align: center;
+    width: 100%;
+    display: block;
+    padding: 0;
+    margin: 0;
+    font-size: 1.5vw;
+    font-family: "Poppins", sans-serif;
+}
+
+#title-destination {
+    font-family: "Poppins", sans-serif;
+    display: block;
+    font-size: 2.5vw;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.card-title {
+    position: absolute;
+    bottom: 0;
+    /* Moves title to the bottom */
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+    font-size: small;
+    color: white;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    word-wrap: break-word;
+    /* Ensures long words wrap */
+    white-space: normal;
+    /* Allows text to break into new lines */
+    overflow-wrap: break-word;
+    /* Ensures text is centered */
+}
+
+.card:hover {
+    border: 2px solid white;
+}
