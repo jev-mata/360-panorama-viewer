@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="title">360 - Open Island</title>
     <meta http-equiv="Permissions-Policy" content="xr-spatial-tracking=(self)">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="360 - Open Island" />
+    <meta property="og:description" content="Description of the destination goes here." />
+    <meta property="og:image" content="URL_to_the_destination_image.jpg" />
+    <meta property="og:url" content="https://yourwebsite.com/destination-link" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:title" content="360 - Open Island" />
+    <meta name="twitter:description" content="Description of the destination goes here." />
+    <meta name="twitter:image" content="URL_to_the_destination_image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="icon" type="image/png"
         href='https://cms.openisland.ph/_next/static/media/openisland icon.c5fd2358.png' />
@@ -16,7 +28,8 @@
     <script type="text/javascript" src="tour.js"></script>
     <script type="text/javascript" src="viewer.js"></script>
     <style>
-        body,html{
+        body,
+        html {
             margin: 0;
             padding: 0;
             overflow: hidden;
@@ -169,19 +182,22 @@
             font-family: 'Courier New', Courier, monospace;
             /* Initially hidden */
         }
-        .center{
-            
+
+        .center {
+
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
         .modal img {
             width: 100px;
             height: auto;
             margin-bottom: 10px;
         }
-        #tourIframe{
+
+        #tourIframe {
             border: none;
         }
     </style>
@@ -200,7 +216,8 @@
 
             <img id="randomImage" src="" alt="Random Image">
             <p><strong id="msg">This URL is Under Maintenance</strong></p>
-            <a href="https://www.openisland.ph" style="text-decoration: none;">< Home</a>
+            <a href="https://www.openisland.ph" style="text-decoration: none;">
+                < Home</a>
         </div>
     </div>
 </body>
@@ -219,10 +236,10 @@
     ];
     const randomIndex = Math.floor(Math.random() * imageList.length);
     randomImage.src = imageList[randomIndex];
-    setInterval(()=>{
+    setInterval(() => {
         const randomIndex = Math.floor(Math.random() * imageList.length);
         randomImage.src = imageList[randomIndex];
-    },3000);
+    }, 3000);
 </script>
 
 </html>

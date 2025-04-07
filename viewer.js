@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     async function fetchDestinations() {
         try {
             // const response = await fetch("https://cms.openisland.ph/api/get-destination"); // Adjust API endpoint
-            const response = await fetch("https://cms.openisland.ph/api/destinations"); // Adjust API endpoint
+            const response = await fetch("http://localhost:8000/api/destinations"); // Adjust API endpoint
             const data = await response.json();
             return data;
         } catch (error) {
@@ -50,6 +50,17 @@ document.addEventListener("DOMContentLoaded", async function () {
             return;
         }
         
+        // Dynamically set Open Graph meta tags
+        document.querySelector('meta[property="og:title"]').setAttribute("content", foundItem.name);
+        document.querySelector('meta[property="og:description"]').setAttribute("content", foundItem.description);
+        document.querySelector('meta[property="og:image"]').setAttribute("content", foundItem.thumbnail);
+        document.querySelector('meta[property="og:url"]').setAttribute("content", window.location.href);
+
+        // Dynamically set Twitter Card meta tags
+        document.querySelector('meta[name="twitter:title"]').setAttribute("content", foundItem.name);
+        document.querySelector('meta[name="twitter:description"]').setAttribute("content", foundItem.description);
+        document.querySelector('meta[name="twitter:image"]').setAttribute("content", foundItem.thumbnail);
+
         const tours = JSON.parse(foundItem.virtual_tour);
 
         const scenes = {};
