@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     async function fetchDestinations() {
         try {
             // const response = await fetch("https://cms.openisland.ph/api/get-destination"); // Adjust API endpoint
-            const response = await fetch("http://localhost:8000/api/destinations"); // Adjust API endpoint
+            const response = await fetch("http://cms.openisland.ph/api/destinations"); // Adjust API endpoint
             const data = await response.json();
             return data;
         } catch (error) {
