@@ -32,7 +32,8 @@
         rel="stylesheet">
     <script type="text/javascript" src="viewer.js"></script>
     <style>
-        body,html{
+        body,
+        html {
             margin: 0;
             padding: 0;
             overflow: hidden;
@@ -57,24 +58,6 @@
             max-height: 7%;
         }
 
-        #title-pano-contailer {
-            width: fit-content;
-            top: 35px;
-            right: 5px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
-            opacity: 1;
-            left: 50%;
-            transform: translateX(-50%);
-            position: absolute;
-            height: auto; 
-            border-radius: 5px;
-            color: white;
-            /* background-color: rgba(0,0,0,0.4) ; */
-            z-index: 99;
-        }
 
         .card {
             min-width: 100px;
@@ -98,13 +81,6 @@
             background-color: white;
         }
 
-        #contextMenu {
-            text-decoration: none;
-            background-color: white;
-            font-size: large;
-            color: black;
-        }
-
         #title-panorama {
             text-align: center;
             width: 100%;
@@ -113,40 +89,6 @@
             margin: 0;
             font-size: 1.5vw;
             font-family: "Poppins", sans-serif;
-        }
-
-        #title-destination {
-            font-family: "Poppins", sans-serif;
-            display: block;
-            font-size: 2.5vw;
-            text-align: center;
-            padding: 0;
-            margin: 0;
-            width: 100%;
-        }
-
-        .card-title {
-            position: absolute;
-            bottom: 0;
-            /* Moves title to the bottom */
-            left: 0;
-            width: 100%;
-            padding: 5px 0;
-            font-size: small;
-            color: white;
-            background-image: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
-            text-align: center;
-            font-family: "Poppins", sans-serif;
-            word-wrap: break-word;
-            /* Ensures long words wrap */
-            white-space: normal;
-            /* Allows text to break into new lines */
-            overflow-wrap: break-word;
-            /* Ensures text is centered */
-        }
-
-        .card:hover {
-            border: 2px solid white;
         }
 
         body {
@@ -165,47 +107,47 @@
             width: 100%;
         }
 
-        .modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            height: 70%;
-            background: rgba(255, 255, 255, 0);
-            padding: 20px;
-            text-align: center;
-            font-size: 28px;
-            color: rgb(0, 86, 143);
-            font-weight: bolder;
-            /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); */
-            border-radius: 10px;
-            display: none;
-            font-family: 'Courier New', Courier, monospace;
-            /* Initially hidden */
-        }
-        .center{
-            
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .modal img {
-            width: 100px;
-            height: auto;
-            margin-bottom: 10px;
-        }
-        #tourIframe{
+
+        #tourIframe {
             border: none;
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
         }
     </style>
 </head>
 
 <body>
     <div id="panorama"></div>
-    <div id="title-pano-contailer">
-        <span id="title-destination"></span>
+    <div id="title-pano-contailer" style="
+            top: 5%;
+            padding-bottom: 10px;
+            opacity: 1;
+            left: 50%;
+            right: 50%;
+            transform: translateX(-50%);
+            position: absolute;
+            height: 40px;
+            border-radius: 5px;
+            color: white;
+            width: 100vw; 
+            /* background-color: rgba(0,0,0,0.4) ; */
+            z-index: 99;">
+        <div id="container">
+            <span id="title-destination" style="
+            position: absolute;
+            bottom: 0; 
+            left:0;right: 0;
+            font-family:  'Poppins', sans-serif; font-size: clamp(20px, 2.5vw, 40px); text-align: center; padding: 0;
+                margin: 0; width: 100%;"></span>
+        </div>
         <span id="title-panorama"></span>
     </div>
     <div id="thumbnail-container"></div>
@@ -215,7 +157,8 @@
 
             <img id="randomImage" src="" alt="Random Image">
             <p><strong id="msg">This URL is Under Maintenance</strong></p>
-            <a href="https://www.openisland.ph" style="text-decoration: none;">< Home</a>
+            <a href="https://www.openisland.ph" style="text-decoration: none;">
+                < Home</a>
         </div>
     </div>
 </body>
@@ -234,10 +177,10 @@
     ];
     const randomIndex = Math.floor(Math.random() * imageList.length);
     randomImage.src = imageList[randomIndex];
-    setInterval(()=>{
+    setInterval(() => {
         const randomIndex = Math.floor(Math.random() * imageList.length);
         randomImage.src = imageList[randomIndex];
-    },3000);
+    }, 3000);
 </script>
 
 </html>
